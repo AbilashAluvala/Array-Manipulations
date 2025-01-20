@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Array Manipulations</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+        var cities = ['Delhi','Pune', 'Hyderabad'];
+
+        function loadCities() {
+            var loadcity = document.getElementById("showcity");
+            loadcity.innerHTML = "";
+            cities.map( (city) =>{
+                var option = document.createElement("option");
+                option.innerHTML = city;
+                loadcity.appendChild(option);
+            })
+            document.getElementById("count").innerHTML = `Total Cities : ${cities.length}`
+            
+        }
+        
+        function bodyLoad() {
+            
+            loadCities();
+           
+        }
+    
+        function AddCity() {
+            let cityname = document.getElementById("textCity").value;
+            if(cities.indexOf(cityname) == -1){
+                cities.push(cityname);
+                alert(`${cityname} is added successfully`);
+                loadCities();
+                cityname = "";
+
+            }else{
+                alert(`${cityname} exists..`);
+            }
+
+        }
+    
+        function AscClick() {
+            cities.sort();
+            loadCities();
+        }
+
+        function DesClick() {
+            cities.sort();
+            cities.reverse();
+            loadCities();
+
+        }
+    
+        function RemoveCity() {
+            var selectedCity = document.getElementById("showcity").value;
+            var cityIndex = cities.indexOf(selectedCity);
+            cities.splice(cityIndex,1);
+            loadCities();
+        }        
+        
+        function ClearAllClick() {
+            cities = [];
+            loadCities();
+        }
+    
+        function EditClick() {
+            document.getElementById("txtEditName").value = document.getElementById("showcity").value;
+        }
+        function SaveEdit() {
+            
+            var selecteCity = cities.indexOf(document.getElementById("showcity").value);
+            
+            var upadatedName = document.getElementById("txtEditName").value;
+            cities.splice(selecteCity, 1, upadatedName);
+            
+            loadCities();
+
+        }
+    </script>
+</head>
+<body class="container-fluid" onload="bodyLoad()">
+    <h1>Array Manipulations</h1>
+    <div style="width:400px">
+
+        <div id="addCity">
+            <label class="form-label fw-bold">Addcity</label>
+            <div class="input-group mb-3">
+                <input type="text" id="textCity" class="form-control" >
+                <button class="btn btn-primary" onclick="AddCity()">Add</button>
+            </div>
+        </div>
+
+        <div class="mb-2">
+            <div class="mb-2">
+                <button class="btn btn-success" onclick="AscClick()">Asc</button>
+                <button class="btn btn-success" onclick="DesClick()">Des</button>
+            </div>
+            <select name="" id="showcity" class="form-select" size="5" style="overflow: auto;">
+            </select>
+            <label class="form-label fw-bold" id="count"></label>
+        </div >
+
+        <div class="my-2 btn-group">
+            <button onclick="RemoveCity()" class="btn btn-danger  "><span class="bi bi-trash"></span>Remove City</button>
+            <button onclick="ClearAllClick()" class="btn btn-outline-danger"><span class="bi bi-trash2"></span>Clear All</button>
+            <button onclick="EditClick()" data-bs-target="#editCit" data-bs-toggle="modal" class="btn btn-warning "><span class="bi bi-pen"></span>Edit</button>    
+        </div>
+        <div class="modal fade" id="editCit">
+            <div class="modal-dialog">
+                <div class="modal-content fullscreen">
+                    <div class="modal-header">
+                        <h2>Edit City</h2>
+                        <!-- <span class="bi bi-close" data-bs-dismiss="modal"></span> -->
+                    </div>
+                    <div class="modal-body">
+                        <input type="text" class="form-control" id="txtEditName">
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" onclick="SaveEdit()" data-bs-dismiss="modal">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>
